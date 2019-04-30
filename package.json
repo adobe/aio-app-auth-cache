@@ -1,6 +1,6 @@
 {
   "name": "auth-cache-dynamodb",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "An Openwhisk action exposing a cache interface with DynamoDB",
   "main": "./src/action/dynamodbcache.js",
   "scripts": {
