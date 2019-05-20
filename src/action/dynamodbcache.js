@@ -9,11 +9,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-var crypto = require('./crypto');
-var AWS = require('aws-sdk');
+const crypto = require('./crypto');
+const AWS = require('aws-sdk');
 
-var mycrypto = new crypto();
-var _resolve = null;
+const mycrypto = new crypto();
 
 function main(params) {
   return new Promise((resolve, reject) => {
@@ -43,7 +42,7 @@ function main(params) {
           _get_handler(params, resolve, reject, dynamodb_client);
         }
       } else {
-        resolve({message:"Why are you even here!!!"})
+        reject({message:"Why are you even here!!!"})
       }
     }
   });
@@ -57,7 +56,7 @@ function _set_handler(params, resolve, reject, dynamodb_client) {
   params.refreshToken = params.refreshToken
                             ? mycrypto.encryptString(params.profileID, params.refreshToken)
                             : "";
-  console.log("Persisting..."+params.profileID);
+  //console.log("Persisting..."+params.profileID);
 
   addProfile(params, resolve, reject, dynamodb_client)
 }
@@ -76,17 +75,17 @@ function _get_handler(params, resolve, reject, dynamodb_client) {
       resolve(profile);
     }else{//Return all the providers of this user
       let profiles = response.Items || [];
-      var providers = [];
-      for (var i = 0; i < profiles.length; i++) {
+      let providers = [];
+      for (let i = 0; i < profiles.length; i++) {
         providers.push(profiles[i].provider);
       }
       resolve({providers: providers});
     }
   }
 
-  console.log("Reading persisted key info...");
+  //console.log("Reading persisted key info...");
   if(provider !==null){ //Get one specific identity of this user
-    var dbparams = {
+    let dbparams = {
         TableName: "Profile",
         Key:{
             "profileID": profileID,
@@ -95,7 +94,7 @@ function _get_handler(params, resolve, reject, dynamodb_client) {
     };
     dynamodb_client.get(dbparams, get_dynamodb_handler);
   }else{ //Get all identities of this user
-    var dbparams = {
+    let dbparams = {
         TableName: "Profile",
         KeyConditionExpression: "profileID = :pID",
         ExpressionAttributeValues: {
@@ -107,24 +106,6 @@ function _get_handler(params, resolve, reject, dynamodb_client) {
 
 }
 
-function _get_expiring_on_date(params, resolve, reject, dynamodb_client) {
-  if (_fail_on_missing(["expiryDate"], params, reject) ) return;
-
-  let expiryDate = params.expiryDate;
-  const get_expiring_handler = (err, response) => {
-    if(rejectIfError(err, reject, "dynamodb_get")) return
-    resolve(response);
-  }
-  let dbparams = {
-      TableName: "RefreshToken",
-      KeyConditionExpression: "expiryDate = :expDate",
-      ExpressionAttributeValues: {
-          ":expDate":expiryDate
-      }
-  };
-  dynamodb_client.query(dbparams, get_expiring_handler);
-}
-
 function deleteTokens(params, resolve, reject, dynamodb_client) {
   let {profileID, provider} = params
   let dbparams = {
@@ -132,17 +113,18 @@ function deleteTokens(params, resolve, reject, dynamodb_client) {
       Key:{
         "profileID": profileID,
         "provider": provider
-      }
+      },
+      ReturnValues: 'ALL_OLD'
   }
 
   dynamodb_client.delete(dbparams,
     function(err, data) {
       if(rejectIfError(err, reject, "dynamodb_delete_profile")) return
-      let expiryDate = data.expiryDate;
+      let expiryDate = data.Attributes.refreshTokenExpiry;
       dynamodb_client.delete({
               TableName:"RefreshToken",
               Key:{"profileID":profileID, "expiryDate":expiryDate}
-            }, function(err, data){
+            }, function(err){
               if(rejectIfError(err, reject, "dynamodb_delete_refreshtoken")) return
               resolve({message:"Deleted successfully"})
             });
@@ -151,7 +133,7 @@ function deleteTokens(params, resolve, reject, dynamodb_client) {
 
 function addProfile(params, resolve, reject, dynamodb_client) {
   let { profileID, provider, accessToken, accessTokenExpiry, refreshToken, refreshTokenExpiry, context} = params;
-  var dbparams = {
+  let dbparams = {
       TableName :"Profile",
       Item:{
           "profileID": profileID,
@@ -162,7 +144,7 @@ function addProfile(params, resolve, reject, dynamodb_client) {
           "refreshTokenExpiry": refreshTokenExpiry
           }
     }
-  let set_profile_handler = (err, response) => {
+  let set_profile_handler = (err) => {
       if(rejectIfError(err, reject, "dynamodb_put")) return
       if(provider == "adobe"){
         addRefreshToken(params, resolve, reject, dynamodb_client)
@@ -178,8 +160,8 @@ function addProfile(params, resolve, reject, dynamodb_client) {
 }
 
 function addRefreshToken(params, resolve, reject, dynamodb_client) {
-  let { profileID, provider, accessToken, accessTokenExpiry, refreshToken, refreshTokenExpiry, context} = params;
-  var refreshParams = {
+  let { profileID, provider, refreshToken, refreshTokenExpiry, context} = params;
+  let refreshParams = {
     TableName : "RefreshToken",
     Item:{
       "profileID": profileID,
@@ -188,7 +170,7 @@ function addRefreshToken(params, resolve, reject, dynamodb_client) {
       "refreshToken": refreshToken
     }
   }
-  let set_refreshToken_handler = (err, response) =>{
+  let set_refreshToken_handler = (err) =>{
     if(rejectIfError(err, reject, "dynamodb_put_refresh")) return;
     resolve({
       profileID: profileID,
@@ -211,7 +193,7 @@ function rejectIfError(err, reject, type){
 }
 
 function _fail_on_missing(param_names, params, reject) {
-  for(var param_name of param_names)
+  for(let param_name of param_names)
     if (params[param_name] == null || typeof(params[param_name]) == "undefined") {
       reject({
         "message": "Parameter " + param_name + " is required."
