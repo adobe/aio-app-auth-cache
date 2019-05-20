@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.com/adobe/adobeio-cna-auth-cache-dynamodb.svg?branch=master)](https://travis-ci.com/adobe/adobeio-cna-auth-cache-dynamodb)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+
 This module is an OW action to store access tokens in Dynamodb.
 
 ## Usage
