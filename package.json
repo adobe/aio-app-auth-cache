@@ -5,8 +5,9 @@
   "main": "./src/action/dynamodbcache.js",
   "scripts": {
     "start": "babel-watch ./test/server/index.js",
-    "test": "babel-node ./node_modules/.bin/isparta cover _mocha -- 'test/**/*.spec.js' ",
-    "test_nocov": "mocha 'test/**/*.spec.js' --recursive --compilers js:babel-register",
+    "posttest": "eslint src",
+    "test": "npm run unit-tests",
+    "unit-tests": "jest --ci",
     "prepublish": "browserify -r ${npm_package_main}:main-action --node > ${npm_package_name}-${npm_package_version}.js && npm run whisk_wrapper",
     "whisk_wrapper": "echo \"var main = require('main-action').default;\" >> ${npm_package_name}-${npm_package_version}.js"
   },
@@ -19,6 +20,7 @@
     "aws-sdk": "^2.92.0"
   },
   "devDependencies": {
+    "@shelf/jest-dynamodb": "^1.1.1",
     "aes256": "^1.0.4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.16.0",
@@ -34,10 +36,14 @@
     "cls-bluebird": "^2.0.1",
     "compression": "^1.6.2",
     "cors": "^2.7.1",
+    "eslint": "^4",
+    "eslint-plugin-jest": "^22.1.2",
     "express": "^4.14.0",
     "http-status": "^0.2.3",
     "isparta": "^4.0.0",
     "istanbul": "^0.3.17",
+    "jest": "^23.0.1",
+    "jest-junit": "^5.0.0",
     "mocha": "^2.5.3",
     "nock": "^9.0.2",
     "openwhisk": "^2.3.0",
@@ -62,5 +68,21 @@
   "keywords": [
     "serverless, openwhisk, authentication, passportjs"
   ],
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "jest": {
+    "collectCoverage": true,
+    "testPathIgnorePatterns": [
+      "<rootDir>/tests/fixtures/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/tests/fixtures/"
+    ],
+    "preset": "@shelf/jest-dynamodb",
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "./jest.setup.js"
+  }
 }
