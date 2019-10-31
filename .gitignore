@@ -1,13 +1,7 @@
-*-debug.log
-*-error.log
-/.nyc_output
-/dist
-/lib
-/tmp
-/yarn.lock
+
 node_modules
 .DS_Store
-/test-results.xml
 coverage/
 junit.xml
-auth-cache-dynamodb-*.js
+auth-cache-*.js
+package-lock.json
