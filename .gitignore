@@ -5,3 +5,4 @@ coverage/
 junit.xml
 auth-cache-*.js
 package-lock.json
+dist

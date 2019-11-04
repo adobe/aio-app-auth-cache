@@ -11,6 +11,7 @@ governing permissions and limitations under the License.
 */
 const crypto = require('./crypto');
 const stateLib = require('@adobe/aio-lib-state')
+const logger = require('@adobe/aio-lib-core-logging')('auth-cache', { level: process.env.LOG_LEVEL })
 
 const mycrypto = new crypto();
 
@@ -53,9 +54,8 @@ function _set_handler(params, resolve, reject, stateClient) {
 function _get_handler(params, resolve, reject, stateClient) {
   if (_fail_on_missing(["profileID", "provider"], params, reject) ) return;
 
-  let profileID = params.profileID
-  let provider = params.provider
-  stateClient.get(profileID+":"+provider)
+  let key = params.profileID + ":" + params.provider
+  stateClient.get(key)
     .then((response)=>{
         if(response.value){
             let value = response.value
@@ -63,16 +63,21 @@ function _get_handler(params, resolve, reject, stateClient) {
             if(value.refreshToken && value.refreshToken.length > 0)
                 value.refreshToken = mycrypto.decryptString(value.profileID, value.refreshToken)  
             resolve(value)
-        }else
-            reject({message:"Not Found"})
+        }else{
+          logger.debug("Value not found for key " + key)
+          reject({message:"Not Found"})
+        }
     })
     .catch((err)=>{reject(err)})
 }
 
 function _delete_tokens(params, resolve, reject, stateClient) {
-  let {profileID, provider} = params
-  stateClient.delete(profileID+":"+provider)
-    .then(()=>{resolve("Deleted successfully")})
+  let key = params.profileID + ":" + params.provider
+  stateClient.delete(key)
+    .then(()=>{
+      logger.debug("Deleted key " + key)
+      resolve("Deleted successfully")
+    })
 }
 
 function _add_profile(params, resolve, reject, stateClient) {
@@ -86,7 +91,9 @@ function _add_profile(params, resolve, reject, stateClient) {
           "refreshTokenExpiry": refreshTokenExpiry
     }
   let set_profile_handler = () => {  
-    stateClient.get(profileID+":"+provider).then(()=>{
+    let key = profileID+":"+provider
+    stateClient.get(key).then(()=>{
+        logger.debug('Added key ' + key)
         resolve({
             profileID: profileID,
             provider: provider,
@@ -105,6 +112,7 @@ function _add_profile(params, resolve, reject, stateClient) {
 function _fail_on_missing(param_names, params, reject) {
   for(let param_name of param_names)
     if (params[param_name] == null || typeof(params[param_name]) == "undefined") {
+      logger.error("Parameter " + param_name + " is required.")
       reject({
         "message": "Parameter " + param_name + " is required."
       });
