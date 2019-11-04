@@ -1,7 +1,7 @@
 {
-  "name": "auth-cache-dynamodb",
+  "name": "aio-app-auth-cache",
   "version": "0.1.0",
-  "description": "An Openwhisk action exposing a cache interface with DynamoDB",
+  "description": "An Openwhisk action exposing a cache interface",
   "main": "./src/action/cache.js",
   "scripts": {
     "start": "babel-watch ./test/server/index.js",
@@ -18,11 +18,9 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@adobe/aio-lib-core-logging": "^1.0.0",
-    "@adobe/aio-lib-state": "^1.0.2",
-    "aws-sdk": "^2.92.0"
+    "@adobe/aio-lib-state": "^1.0.2"
   },
   "devDependencies": {
-    "@shelf/jest-dynamodb": "^1.1.1",
     "aes256": "^1.0.4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.26.3",
@@ -101,7 +99,6 @@
     "coveragePathIgnorePatterns": [
       "<rootDir>/tests/fixtures/"
     ],
-    "preset": "@shelf/jest-dynamodb",
     "reporters": [
       "default",
       "jest-junit"
