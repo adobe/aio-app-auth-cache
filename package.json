@@ -1,6 +1,6 @@
 {
   "name": "aio-app-auth-cache",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "An Openwhisk action exposing a cache interface",
   "main": "./src/action/cache.js",
   "scripts": {
