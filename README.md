@@ -1,12 +1,11 @@
-[![Build Status](https://travis-ci.com/adobe/adobeio-cna-auth-cache-dynamodb.svg?branch=master)](https://travis-ci.com/adobe/adobeio-cna-auth-cache-dynamodb)
+[![Build Status](https://travis-ci.com/adobe/aio-app-auth-cache.svg?branch=master)](https://travis-ci.com/adobe/aio-app-auth-cache)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
-This module is an OW action to store access tokens in Dynamodb.
+This module is an OW action to store access tokens.
 
 ## Usage
 This can be used to store access tokens and the corresponding expiry dates.
-The mandatory parameters required for this action to talk to dynamodb include accessKeyId, secretAccessKey, sessionToken (only in case of temporary credentials), region and endpoint.
 Some important terminology is listed below.
 profileID is <IntegrationID>:oauth:<IMS UserID>
 provider is "adobe" for IMS
@@ -36,17 +35,6 @@ profileID
 provider
 ```
 
-## Schema
-The dynamodb tables required for this action should have the following schema
-```
-#Profile Table
-profileID (Partition Key)
-provider (Sort Key)
-
-#Refresh Table
-profileID (Partition Key)
-expiryDate (Sort Key)
-```
 
 ### Contributing
 
