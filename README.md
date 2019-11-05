@@ -1,3 +1,5 @@
+[![Version](https://img.shields.io/npm/v/@adobe/aio-app-auth-cache.svg)](https://npmjs.org/package/@adobe/aio-app-auth-cache)
+[![Downloads/week](https://img.shields.io/npm/dw/@adobe/aio-app-auth-cache.svg)](https://npmjs.org/package/@adobe/aio-app-auth-cache)
 [![Build Status](https://travis-ci.com/adobe/aio-app-auth-cache.svg?branch=master)](https://travis-ci.com/adobe/aio-app-auth-cache)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
