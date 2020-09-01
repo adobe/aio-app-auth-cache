@@ -52,7 +52,7 @@
     "jest-junit": "^5.0.0",
     "mocha": "^2.5.3",
     "nock": "^9.0.2",
-    "openwhisk": "^2.3.0",
+    "openwhisk": "^3.21.2",
     "replace": "^0.3.0",
     "request": "^2.79.0",
     "resource-router-middleware": "^0.6.0",
