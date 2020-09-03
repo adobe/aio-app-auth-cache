@@ -10,8 +10,8 @@ This module is an OW action to store access tokens.
 This can be used to store access tokens and the corresponding expiry dates.
 Some important terminology is listed below.
 profileID is <IntegrationID>:oauth:<IMS UserID>
-provider is "adobe" for IMS
-accessToken is either the user accessToken or service token as per IMS terminilogy
+the provider is "adobe" for IMS
+accessToken is either the user accessToken or service token as per IMS terminology
 Call the action with any of the following combinations for the described functionality.
 
 
