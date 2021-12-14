@@ -11,7 +11,6 @@ governing permissions and limitations under the License.
 */
 import action from '../../src/action/cache.js';
 
-const StateLib = require ('@adobe/aio-lib-state')
 jest.mock('@adobe/aio-lib-state')
 
 afterEach(async () => {
@@ -46,37 +45,32 @@ describe('Cache', () => {
 
   describe('with no params', () => {
     it('should fail', async () => {
-      try{
-        await action({})
-      }catch(err){
-        expect(err).toEqual({ message: 'Parameter profileID is required.' })
-      }
+      await expect(
+        action({})
+      ).rejects
+       .toEqual({ message: 'Parameter profileID is required.' })
     })
   })
   describe('with no provider', () => {
     it('should not get', async () => {
-      try{
-        await action({profileID:'profile1'})
-      }catch(err){
-        expect(err).toEqual({ message: 'Parameter provider is required.' })
-      }
+      await expect(
+        action({profileID:'profile1'})
+      ).rejects
+       .toEqual({ message: 'Parameter provider is required.' })
     })
     it('should not put', async () => {
-      try{
-        await action({profileID:'profile1', accessToken: "at"})
-      }catch(err){
-        expect(err).toEqual({ message: 'Parameter provider is required.' })
-      }
+      await expect(
+        action({profileID:'profile1', accessToken: "at"})
+      ).rejects
+       .toEqual({ message: 'Parameter provider is required.' })
     })
   })
   describe('with non existing key', () => {
     it('should fail', async () => {
-      try{
-        await action({...commonParams, profileID:"none"})
-      }catch(err){
-        expect(err).toEqual({ message: 'Not Found' })
-      }
+      await expect(
+        action({...commonParams, profileID:"none"})
+      ).rejects
+       .toEqual({ message: 'Not Found' })
     })
   })
-
 });

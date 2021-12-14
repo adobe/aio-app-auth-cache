@@ -2,7 +2,7 @@ const crypto = require('../../../src/action/crypto')
 const mycrypto = new crypto();
 
 module.exports = {
-    init: async (config) => {
+    init: async () => {
         //new Promise((resolve, reject) => {
             return {
                 get: async (key) => {return key=="profileID:adobe" ? {value:{ "profileID": "profileID",
@@ -10,7 +10,7 @@ module.exports = {
                 "accessToken": mycrypto.encryptString("profileID", "at"),
                 "refreshToken": mycrypto.encryptString("profileID", "rt")
             }} : ""},
-                put: async (key, value) => {return key},
+                put: async (key) => {return key},
                 delete: async (key) => {return key}
             }
         //})

@@ -5,7 +5,7 @@
   "main": "./src/action/cache.js",
   "scripts": {
     "start": "babel-watch ./test/server/index.js",
-    "posttest": "eslint src",
+    "posttest": "eslint src test",
     "test": "npm run unit-tests",
     "unit-tests": "jest --ci",
     "prepublish": "webpack",
@@ -21,6 +21,7 @@
     "@adobe/aio-lib-state": "^1.0.2"
   },
   "devDependencies": {
+    "@adobe/eslint-config-aio-lib-config": "^1.4.0",
     "aes256": "^1.0.4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.26.3",
@@ -42,8 +43,13 @@
     "compression": "^1.6.2",
     "cors": "^2.7.1",
     "encoding": "^0.1.12",
-    "eslint": "^4",
-    "eslint-plugin-jest": "^22.1.2",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-jsdoc": "^37.2.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
     "express": "^4.14.0",
     "http-status": "^0.2.3",
     "isparta": "^4.0.0",
@@ -58,6 +64,7 @@
     "resource-router-middleware": "^0.6.0",
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2",
+    "typescript": "^4.5.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   },
