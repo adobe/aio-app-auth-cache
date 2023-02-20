@@ -17,7 +17,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@adobe/aio-lib-core-logging": "^1.0.0",
+    "@adobe/aio-lib-core-logging": "^2.0.0",
     "@adobe/aio-lib-state": "^1.0.2"
   },
   "devDependencies": {
