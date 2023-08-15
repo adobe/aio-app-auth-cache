@@ -17,7 +17,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@adobe/aio-lib-core-logging": "^1.0.0",
+    "@adobe/aio-lib-core-logging": "^2.0.0",
     "@adobe/aio-lib-state": "^1.0.2",
     "@babel/runtime": "^7.22.6"
   },
@@ -46,7 +46,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "express": "^4.14.0",
-    "http-status": "^0.2.3",
+    "http-status": "^1.6.2",
     "isparta": "^4.0.0",
     "istanbul": "^0.3.17",
     "jest": "^29",
