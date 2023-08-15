@@ -56,7 +56,7 @@
     "openwhisk": "^3.21.2",
     "replace": "^1.2.2",
     "request": "^2.79.0",
-    "resource-router-middleware": "^0.6.0",
+    "resource-router-middleware": "^0.7.0",
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2",
     "typescript": "^4.5.4",
