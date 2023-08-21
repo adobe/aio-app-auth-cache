@@ -58,7 +58,7 @@
     "request": "^2.79.0",
     "resource-router-middleware": "^0.7.0",
     "supertest": "^1.1.0",
-    "supertest-as-promised": "^2.0.2",
+    "supertest-as-promised": "^4.0.2",
     "typescript": "^4.5.4",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
