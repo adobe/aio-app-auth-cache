@@ -32,7 +32,7 @@
     "babel-loader": "^8.0.6",
     "body-parser": "^1.15.2",
     "browserify": "^17",
-    "chai": "^3.5.0",
+    "chai": "^4.3.8",
     "chai-as-promised": "^6.0.0",
     "cls-bluebird": "^2.0.1",
     "compression": "^1.6.2",
